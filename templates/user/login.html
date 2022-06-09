@@ -12,14 +12,14 @@
  		<h1>login</h1>
  	</div>
  	<div class="main">
- 		<form method="post"> {% csrf_token %}
+ 		<form method="post" > {% csrf_token %}
  			<span>
  				<i class="fa fa-user"></i>
- 				<input type="text" placeholder="Username" name="">
+ 				<input type="text" placeholder="Username" name="username">
  			</span><br>
  			<span>
  				<i class="fa fa-lock"></i>
- 				<input type="password" placeholder="password" name="">
+ 				<input type="password" placeholder="password" name="password">
  			</span><br>
  				<button>login</button>
 
