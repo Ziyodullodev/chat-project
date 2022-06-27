@@ -1,0 +1,201 @@
+.chat {
+    height: 56rem;
+    display: grid;
+    grid-template-rows: 6rem auto;
+
+    &__header {
+        background-color: $blue;
+        color: $white;
+        display: flex;
+    }
+
+    &__detail {
+        padding: 0 2rem;
+        width: 100%;
+        cursor: pointer;
+        display: flex;
+        align-items: start;
+        flex-direction: column;
+        justify-content: center;
+
+        &:hover {
+            background-color: darken($blue, 5%);
+        }
+    }
+
+    &__name {
+        font-size: 1.5rem;
+    }
+
+    &__right {
+        display: flex;
+        align-items: stretch;
+        height: 100%;
+    }
+
+    &__top-btn {
+        height: 100%;
+
+
+        &:hover {
+            background-color: darken($blue, 5%);
+        }
+
+        &.search {
+            width: 5rem;
+        }
+
+        &.menu-bar {
+            position: relative;
+            width: 5rem;
+
+            .dropdown {
+                cursor: default;
+                width: 20rem;
+                transform: translateY(100%);
+                background-color: $white;
+                position: absolute;
+                z-index: 1;
+                right: 0;
+                bottom: 0;
+                text-align: left;
+                padding: .5rem 0;
+                box-shadow: 1px 1px 5px darken($gray, 50%);
+
+                &__item {
+                    cursor: pointer;
+                    padding: 1rem 2rem;
+
+                    &:hover {
+                        background-color: darken($gray, 10%);
+                    }
+                }
+            }
+        }
+    }
+
+    &__body {
+        background-color: lighten($blue, 30%);
+        min-height: 43rem;
+        overflow-y: auto;
+        position: relative;
+        padding: 1rem 3rem;
+        .select-chat{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: darken($body-color, 30%);
+            color: $white;
+            padding: .5rem 1rem;
+            border-radius: 3rem;
+}
+        
+
+        &::-webkit-scrollbar {
+            width: 3px;
+        }
+
+        &::-webkit-scrollbar-track {
+            background: dar $gray;
+            /* color of the tracking area */
+        }
+
+        &::-webkit-scrollbar-thumb {
+            background-color: $blue;
+        }
+
+        
+    }
+    
+    &__list{
+        display: flex;
+        flex-direction: column;
+    }
+    &__content {
+        align-self: flex-start;
+        border-radius: 5px 5px 5px 0;
+        @include flex(center, flex-start);
+        background-color: white;
+        padding: 0 1rem;
+        position: relative;
+        &-right
+         {
+            margin-left: 1rem;
+            margin-top: 2.5rem;
+            right: 2%;
+            bottom: 2%;
+
+            time{
+                font-size: .5rem;
+                color: $icon-color; 
+            }
+        }
+
+        &:not(:last-child) {
+            margin-bottom: 2rem;
+        }
+
+        &.me {
+            border-radius: 5px 5px 0 5px;
+            align-self: flex-end;
+            background-color: lighten($green, 60%);
+            span, time{
+                font-size: .5rem;
+                color: $green;
+            }
+            span{
+                margin-left: 1rem;
+            }
+        }
+    }
+
+    &__profile-image {
+        height: 4.5rem;
+        width: 4.5rem;
+        border-radius: 50%;
+        margin-right: 1rem;
+    }
+
+&__form {
+        width: 100%;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+
+        button {
+            width: 5rem;
+            height: 5rem;
+            align-self: flex-end;
+        }
+        .file-label{
+            width: 5rem;
+            height: 5rem;
+            cursor: pointer;
+            align-self: flex-end;
+            @include flex($align: center, $justify: center)
+
+        }
+        .file-input {
+            width: 0.1px;
+            height: 0.1px;
+            opacity: 0;
+            overflow: hidden;
+            position: absolute;
+            z-index: -1;
+        }
+    }
+
+    &__message-area {
+        font-family: $font-family;
+        font-size: 1.4rem;
+        overflow: hidden;
+        resize: none;
+        outline: none;
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+
+
+}

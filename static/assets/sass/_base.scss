@@ -1,0 +1,51 @@
+html{
+    font-size: 10px;
+    box-sizing: border-box;
+}
+
+*,*::after,*::before{
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+body{
+    font-family: $font-family;
+    font-size: 1.4rem;
+    line-height: 1.8rem;
+    background-color: $body-color;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+ul{
+    list-style: none;
+} 
+
+a{
+    color: $blue;
+    text-decoration: none;
+} 
+
+h1{
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+h2{
+    font-size: 1.4rem;
+}
+
+img{
+    display: inline-block;
+    width: 100%;
+}
+
+button{
+    cursor: pointer;
+    outline: none;
+    border: none;
+    background-color: transparent;
+}

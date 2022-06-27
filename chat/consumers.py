@@ -2,10 +2,11 @@ import json
 from channels.consumer import AsyncConsumer
 from channels.db import database_sync_to_async
 from django.contrib.auth import get_user_model
-
+from django.contrib.auth.models import User
+from .serializer import Userserializer, UserProfileserializer
 from chat.models import Thread, ChatMessage
-
-User = get_user_model()
+from users.models import UserProfile
+User1 = get_user_model()
 
 
 class Chatconsumer(AsyncConsumer):
@@ -25,7 +26,8 @@ class Chatconsumer(AsyncConsumer):
     async def websocket_receive(self, event):
         print('resiver:', event)
         reseived_data = json.loads(event['text'])
-
+        type = reseived_data.get('type')
+        # if type == "send-message":
         msg = reseived_data.get('message')
         sent_by_id = reseived_data.get('sent_by')
         send_to_id = reseived_data.get('send_to')
@@ -44,26 +46,72 @@ class Chatconsumer(AsyncConsumer):
             print("send to id yoq")
         if not thread_obj:
             print("thread obj yoq")
-
-        await self.create_chat_message(thread_obj, sent_by_user, msg)
+        # print(type)
+        if type == "send-message":
+            await self.create_chat_message(thread_obj, sent_by_user, msg)
 
         other_user_chat_room = f'user_chatroom_{send_to_id}'
 
         self_user = self.scope['user']
+        if type == "search-user":
+            val = reseived_data.get('user')
+            if val == "":
+                resp = {
+                    'type': "search",
+                    'result':'null',
+                }
+            else:
+                user_list = await self.get_user_object_name(val)
+                
+                if user_list is None:
+                    resp = {
+                        'type': "search",
+                        'result':'nono',
+                    }
+                else:
+                    ser = Userserializer(data=user_list, many=True)
+                    
+                    if ser.is_valid():
+                        resp = {
+                            'type': "search",
+                            'result':'nono',
+                        }
+                    
+                    else:
+                        
+                        resp = {
+                            'type': "search",
+                            'result':val,
+                            'data':{
+                                'users':ser.data
+                            }
+                        }
 
-        resp = {
-            'message': msg,
-            'sent_by': self_user.id,
-            'thread_id':thread_id
-        }
-        # print("other",other_user_chat_room)
-        await self.channel_layer.group_send(
-            other_user_chat_room,
-            {
-                'type': 'chat_message',
-                'text': json.dumps(resp)
+        else:
+            resp = {
+                'type': "sms",
+                'message':msg,
+                'sent_by': self_user.id,
+                # 'sent_by_user': rasm,
+                'thread_id':thread_id
             }
-        )
+        # print("other",other_user_chat_room)
+        # if type == "search-user":
+        # await self.channel_layer.group_send(
+        #     other_user_chat_room,
+        #     {
+        #         'type': 'chat_message',
+        #         'text': json.dumps(resp)
+        #     }
+        # )
+        # else:
+        await self.channel_layer.group_send(
+                other_user_chat_room,
+                {
+                    'type': 'chat_message',
+                    'text': json.dumps(resp)
+                }
+            )
         # print("selflik",self.chat_room)
         await self.channel_layer.group_send(
             self.chat_room,
@@ -82,16 +130,31 @@ class Chatconsumer(AsyncConsumer):
             'type': 'websocket.send',
             'text': event['text']
         })
-
+    async def search_user(self, event):
+            print('search_user', event)
+            await self.send({
+                'type': 'websocket.send',
+                'text': event['text']
+            })
 
     @database_sync_to_async
     def get_user_object(self, user_id):
-        usr = User.objects.filter(id=user_id)
+        usr = User1.objects.filter(id=user_id)
         if usr.exists():
             obj = usr.first()
         else:
             obj = None
         return obj
+
+    @database_sync_to_async
+    def get_user_object_name(self, user_name):
+        usr = User.objects.filter(username__startswith=user_name)
+        if usr:
+            obj = usr
+        else:
+            obj = None
+        return obj
+
 
     @database_sync_to_async
     def get_thread_object(self, thread_id):

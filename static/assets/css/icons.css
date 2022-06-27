@@ -1,0 +1,252 @@
+.icon {
+  background-repeat: no-repeat;
+  -webkit-transform: scale(0.6);
+          transform: scale(0.6);
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.icon-new-group {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -20px -222px;
+  width: 40px;
+  height: 28px;
+}
+
+.icon-contacts {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -22px -270px;
+  width: 36px;
+  height: 36px;
+}
+
+.icon-settings {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -20px -325px;
+  width: 40px;
+  height: 41px;
+}
+
+.icon-emoji {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -18px -670px;
+  width: 44px;
+  height: 44px;
+}
+
+.icon-emoji-outline {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -18px -734px;
+  width: 44px;
+  height: 44px;
+}
+
+.icon-faq {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -20px -1274px;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-menu {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -22px -174px;
+  width: 36px;
+  height: 28px;
+}
+
+.icon-file-upload {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -23px -137px;
+  width: 38px;
+  height: 44px;
+}
+
+.icon-file-upload-outline {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -23px -201px;
+  width: 38px;
+  height: 44px;
+}
+
+.icon-close-sm {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -32px -388px;
+  width: 20px;
+  height: 20px;
+}
+
+.icon-search {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -28px -429px;
+  width: 29px;
+  height: 28px;
+}
+
+.icon-audio-record {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -25px -570px;
+  width: 33px;
+  height: 42px;
+}
+
+.icon-audio-record-outline {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -25px -1410px;
+  width: 33px;
+  height: 42px;
+}
+
+.icon-close-lg {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -30px -640px;
+  width: 24px;
+  height: 24px;
+}
+
+.icon-send {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -22px -1726px;
+  width: 49px;
+  height: 48px;
+}
+
+.icon-bar-white {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -38px -2023px;
+  width: 8px;
+  height: 32px;
+}
+
+.icon-search-white {
+  background-image: url("../images/icons/IconsetW_2x.png");
+  background-position: -26px -2075px;
+  width: 33px;
+  height: 33px;
+}
+
+.icon-close-white {
+  background-image: url("../images/icons/PhotoIcons_2x.png");
+  background-position: -20px -20px;
+  width: 40px;
+  height: 42px;
+}
+
+.icon-phone {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -24px -20px;
+  width: 36px;
+  height: 36px;
+}
+
+.icon-notification {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -24px -76px;
+  width: 36px;
+  height: 36px;
+}
+
+.icon-group-common {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -24px -180px;
+  width: 32px;
+  height: 32px;
+}
+
+.icon-send-area {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -20px -440px;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-send-area-outline {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -20px -500px;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-bio {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -20px -688px;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-about {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -20px -386px;
+  width: 40px;
+  height: 40px;
+}
+
+.icon-avatar {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -20px -798px;
+  width: 40px;
+  height: 36px;
+}
+
+.icon-avatar-outline {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -20px -854px;
+  width: 40px;
+  height: 36px;
+}
+
+.icon-eye {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -24px -1700px;
+  width: 32px;
+  height: 22px;
+}
+
+.icon-pin {
+  background-image: url("../images/icons/General_2x.png");
+  background-position: -26px -1783px;
+  width: 28px;
+  height: 28px;
+}
+
+.icon-arrow-up {
+  background-image: url("../images/icons/Major_2x.png");
+  background-position: -10px -68px;
+  width: 28px;
+  height: 16px;
+}
+
+.icon-arrow-down {
+  background-image: url("../images/icons/Major_2x.png");
+  background-position: -10px -104px;
+  width: 28px;
+  height: 16px;
+}
+
+.icon-keyboard {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -20px -280px;
+  width: 40px;
+  height: 28px;
+}
+
+.icon-menu-dark {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -22px -136px;
+  width: 36px;
+  height: 24px;
+}
+
+.icon-twitter {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -14px -560px;
+  width: 54px;
+  height: 44px;
+}
+
+.icon-twitter-outline {
+  background-image: url("../images/icons/ProfileIcons_2x.png");
+  background-position: -14px -624px;
+  width: 54px;
+  height: 44px;
+}

@@ -1,0 +1,12 @@
+//main settings:
+@import 'variables';
+@import 'mixins';
+@import 'base';
+@import 'classes';
+//sections:
+@import 'sections/telegram';
+@import 'sections/dealog';
+@import 'sections/menu';
+@import 'sections/chat';
+@import 'sections/profile';
+@import 'sections/settings';

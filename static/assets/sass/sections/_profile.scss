@@ -1,0 +1,186 @@
+.chat .profile {
+    cursor: default;
+    border-radius: .5rem;
+    background-color: $body-color;
+    width: 35%;
+    height: 80vh;
+    position: absolute;
+    top: 50%;
+    right: 50%;
+    transform: translate(50%, -50%);
+    z-index: 10;
+    color: black;
+    display: grid;
+    grid-template-rows: 1fr auto;
+
+    span {
+        font-size: 2rem;
+        color: $icon-color;
+
+        &.icon {
+            transform: scale(.5);
+        }
+    }
+
+    &__header {
+        background-color: $white;
+        @include flex;
+    }
+
+    &__title {
+        margin-left: 2rem;
+    }
+
+    &__buttons {
+        button {
+            padding: 2rem;
+        }
+    }
+
+    &__body{
+        overflow-y: scroll;
+        &::-webkit-scrollbar {
+            width: 5px;
+          } 
+        &::-webkit-scrollbar-track {
+            background: $gray; 
+          }
+        &::-webkit-scrollbar-thumb {
+            background-color: lighten($icon-color, 10%) ;   
+            border: 1px solid $gray;
+        }
+    }
+
+    &__picture {
+        background-color: $white;
+        padding: 2rem;
+        margin-bottom: 1rem;
+        @include flex(center, flex-start);
+    }
+
+    &__avatar {
+        width: 6rem;
+        height: 6rem;
+        border-radius: 50%;
+        margin-right: 2rem;
+    } 
+
+    &__name {
+        p {
+            font-size: .9rem;
+            color: $icon-color;
+            margin-top: .5rem;
+        }
+    }
+
+    &__main {
+        background-color: $white;
+        padding: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    &__item {
+        padding: 1rem 0;
+        cursor: pointer;
+        transition: background-color .3s ease;
+
+        &:hover {
+            background-color: $gray;
+        }
+
+        p {
+            margin-left: 5.8rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: lighten($link-color, 10%);
+        }
+    }
+
+    &__item:first-child {
+        @include flex(center, flex-start);
+
+        .username {
+            margin-left: 2rem;
+
+            p {
+                font-size: .9rem;
+                font-weight: normal;
+                text-transform: capitalize;
+                color: $icon-color;
+                margin-top: .2rem;
+                margin-left: 0;
+            }
+        }
+    }
+
+    &__item:nth-child(3) {
+        @include flex(center, flex-start);
+
+        p {
+            margin-left: 2rem;
+            text-transform: capitalize;
+            font-weight: normal;
+            color: inherit;
+        }
+    }
+
+    &__sources {
+        background-color: $white;
+        padding: 2rem;
+        margin-bottom: 1rem;
+
+        span {
+            font-size: 2.2rem;
+        }
+
+        .source {
+            padding: 1rem;
+            @include flex(center, flex-start);
+            cursor: pointer;
+            transition: background-color .3s ease;
+
+            &:hover {
+                background-color: $gray;
+            }
+
+            div.fas {
+                width: 2rem;
+            }
+
+            p {
+                font-size: 1.2rem;
+                margin-left: 3rem;
+            }
+        }
+    }
+    &__footer{
+        background-color: $white;
+        padding: 2rem;
+
+        .footer-item{
+            padding: 1rem 2rem;
+            cursor: pointer;
+            transition: background-color .3s ease;
+            &:hover {
+                background-color: $gray;
+            } 
+            p{
+                margin-left: 3.8rem;  
+            }
+            &:first-child {
+                @include flex(center, flex-start);
+        
+                p {
+                    margin-left: 2rem;
+                    font-size: 1.2rem;
+                }
+            } 
+            &:last-child{
+                color: red;
+            }
+           
+        }
+
+    }
+
+}

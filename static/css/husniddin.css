@@ -30,6 +30,7 @@ html {
   overflow-y: auto;
   max-height: 65%;
   padding-bottom: 20px;
+  background-color: red;
 }
 .card-header {
   border-radius: 15px 15px 0 0 !important;
