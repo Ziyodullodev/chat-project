@@ -1,0 +1,75 @@
+<html>
+<head>
+  {% load static %}
+    <title> Transparent Login Form Design </title>
+    <link rel="stylesheet" type="text/css" href="{% static 'login/signup2.css' %}">   
+</head>
+    <body>
+
+    <div class="login-box">
+        <form>
+        <div class="title-block">
+            
+            <div>
+                <h1 class="your-h">Your Info</h1>
+            <p class="your-p">Please enter your name and upload a photo</p>
+            </div>
+            
+            <img src="{% static 'login/uploadp.jpg' %}" class="avatar">
+            
+        </div>
+            
+                <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>FirstName</label>
+                  </div>
+                  <div class="txt_field">
+                    <input type="text" required>
+                    <span></span>
+                    <label>LastName</label>
+                  </div>
+            <input style="margin-top: 25px;" type="submit" name="submit" value="Login">  
+            </form>
+        
+        
+        </div>
+    
+    </body>
+</html>
+
+<!-- <!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Sign-Up pages</title>
+    <link rel="stylesheet" href="style2.css">
+  </head>
+  <body>
+    <div class="center">
+      <div>
+        <h1 class="your-h">Your Info</h1>
+    <p class="your-p">Please enter your name and upload a photo</p>
+     <img src="uploadp.jpg" class="avatar">
+    </div>
+   
+
+      <form method="post">
+        <div class="txt_field">
+          <input type="text" required>
+          <span></span>
+          <label>Username</label>
+        </div>
+        <div class="txt_field">
+          <input type="password" required>
+          <span></span>
+          <label>Password</label>
+        </div>
+        <input type="submit" value="Login">
+        
+      </form>
+    </div>
+
+  </body>
+</html> -->

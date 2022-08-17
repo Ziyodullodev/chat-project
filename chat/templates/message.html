@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    {% load static %}
+    <title>Chat</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css"
+        href="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.css">
+    <script type="text/javascript"
+        src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.min.js"></script>
+
+    <link rel="stylesheet" href="{% static 'css/message.css' %}">
+
+</head>
+<!--Coded With Love By Mutiullah Samim-->
+
+<body>
+    {% if user.is_authenticated %}
+    <a href="{% url 'logout' %}">
+        <h1 style="text-align: end; padding-right: 10px">Logout</h1>
+    </a>
+    <h1 style="text-align: end; padding-right: 10px">Logged in as : {{ user.username }}</h1>
+    <input type="hidden" id="logged-in-user" value="{{ user.id }}">
+    {% endif %}
+    <div class="container-fluid h-100">
+        <div class="row justify-content-center h-100 ">
+            <div class="col-md-4 col-xl-3 chat h-100 mt-4">
+                <div class="card mb-sm-3 mb-md-0 contacts_card">
+                    <div class="card-header">
+                        <div class="input-group">
+                            <form id="get-user">
+                                <div class="input-group-prepend">
+                                    <input id="dialog__search-bar" type="search" placeholder="Search..." name=""
+                                        class="form-control search" autocomplete="off">
+                                    <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="card-body contacts_body">
+                        <ui class="contacts">
+                            {% for thread in Threads %}
+                            <li class="{% if forloop.first %}active{% endif %} contact-li"
+                                chat-id="chat_{{ thread.id }}" style="cursor: pointer">
+                                <div class="d-flex bd-highlight">
+                                    <div class="img_cont">
+                                        <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                            class="rounded-circle user_img">
+                                        <span class="online_icon"></span>
+                                    </div>
+                                    <div class="user_info">
+                                        {% if thread.first_person == user %}
+                                        <span>{{ thread.second_person.username }}</span>
+                                        {% else %}
+                                        <span>{{ thread.first_person.username }}</span>
+                                        {% endif %}
+
+                                        {# <p>Kalid is online</p>#}
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                        </ui>
+                    </div>
+                    <div class="card-footer"></div>
+                </div>
+            </div>
+            <div class="col-md-8 col-xl-6 chat h-100 mt-4">
+                <div class="card">
+                    {% for thread in Threads %}
+                    <div class="messages-wrapper  {% if forloop.first %}hide is_active{% else %}hide{% endif %}"
+                        chat-id="chat_{{ thread.id }}" other-user-id="
+                                        {% if thread.first_person == user %}
+                                            {{ thread.second_person.id }}
+                                        {% else %}
+                                            {{ thread.first_person.id }}
+                                        {% endif %}
+                                    ">
+                        <div class="card-header msg_head">
+                            <div class="d-flex bd-highlight">
+                                <div class="img_cont">
+                                    <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg"
+                                        class="rounded-circle user_img">
+                                    <span class="online_icon"></span>
+                                </div>
+                                <div class="user_info">
+                                    {% if thread.first_person == user %}
+                                    <span>Chat with {{ thread.second_person.username }}</span>
+                                    <p id="{{thread.second_person.id}}_typing">Online</p>
+                                    <input type="hidden" id="typing-user" value="{{thread.second_person.id}}_typing">
+
+                                    {% else %}
+                                    <span>Chat with {{ thread.first_person.username }}</span>
+                                    <p id="{{thread.first_person.id}}_typing">Online</p>
+                                    <input type="hidden" id="typing-user" value="{{thread.first_person.id}}_typing">
+                                    {% endif %}
+                                    <p id="typing"></p>
+                                </div>
+                                <div class="video_cam">
+                                    <span><i class="fas fa-video"></i></span>
+                                    <span><i class="fas fa-phone"></i></span>
+                                </div>
+                            </div>
+                            <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                            <div class="action_menu">
+                                <ul>
+                                    <li><i class="fas fa-user-circle"></i> View profile</li>
+                                    <li><i class="fas fa-users"></i> Add to close friends</li>
+                                    <li><i class="fas fa-plus"></i> Add to group</li>
+                                    <li><i class="fas fa-ban"></i> Block</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="scrollDiv" class="card-body msg_card_body">
+                            <!------- messages ------->
+                            {% for chat in thread.chatmessage_thread.all %}
+                            {% if chat.user == user %}
+                            <div class="d-flex mb-4 replied">
+                                <div class="msg_cotainer_send">
+                                    {{ chat.message }}
+                                    <span class="msg_time_send">{{ chat.timestamp|date:"d D" }}, {{
+                                        chat.timestamp|time:"H:i" }}</span>
+                                </div>
+
+                            </div>
+                            {% else %}
+                            <div class="d-flex mb-4 received">
+                                <!-- <div class="img_cont_msg">
+                                                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                            </div> -->
+                                <div class="msg_cotainer">
+                                    {{ chat.message }}
+                                    <span class="msg_time">{{ chat.timestamp|date:"d D" }}, {{ chat.timestamp|time:"H:i"
+                                        }}</span>
+                                </div>
+                            </div>
+                            {% endif %}
+                            {% endfor %}
+
+
+                            <!------- messages ------->
+                        </div>
+
+                    </div>
+                    {% endfor %}
+                    <div class="card-footer">
+
+                        <form id="send-message-form">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                                </div>
+                                <input type="text" name="" id="input-message" class="form-control type_msg"
+                                    placeholder="Type your message...">
+                                <div class="input-group-append">
+                                    <button class="btn btn-secondary" type="submit">
+                                        <span class="input-group-text send_btn">
+                                            <i class="fas fa-location-arrow"></i>
+                                        </span>
+                                    </button>
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- <script src="{% static 'js/messages.js' %}"></script> -->
+    <script>
+
+
+        const scrollContent = document.querySelector(".msg_card_body");
+        if (scrollContent) {
+            scrollContent.scrollTo(0, scrollContent.scrollHeight);
+        }
+
+        let input_message = $('#input-message')
+        let message_body = $('.msg_card_body')
+        let send_message_form = $('#send-message-form')
+        const USER_ID = $('#logged-in-user').val()
+        const tyuser = $('#typing-user').val()
+        const searchInput = document.querySelector('#input-message')
+
+
+        let loc = window.location
+        let wsStart = 'ws://'
+
+        if (loc.protocol === 'https') {
+            wsStart = 'wss://'
+        }
+
+        let endpoint = wsStart + loc.host + loc.pathname
+
+        var socket = new WebSocket(endpoint)
+
+
+        socket.onopen = async function (e) {
+            console.log('open', e)
+            let send_to = get_active_other_user_id()
+            let thread_id = get_active_thread_id()
+            send_message_form.on('submit', function (e) {
+                e.preventDefault()
+                //        console.log('message', message)
+                let message = input_message.val()
+                // let send_to;
+
+                // if( USER_ID == 1 )
+                //     send_to = 2
+                // else
+                //     send_to = 1
+
+                //        console.log('2user', send_to)
+                let data = {
+                    'message': message,
+                    'sent_by': USER_ID,
+                    'send_to': send_to,
+                    'thread_id': thread_id,
+                    'ketish': "off",
+                    'status': "yaqinda online edi"
+                }
+
+                data = JSON.stringify(data)
+                socket.send(data)
+                $(this)[0].reset()
+            })
+            searchInput.addEventListener('input', e => {
+                inputValue = e.target.value;
+                if (inputValue == "") {
+                    let data = {
+                        'type': 'notyping',
+                        'sent_by': USER_ID,
+                        'send_to': send_to,
+                        'thread_id': thread_id,
+                        'ketish': "on",
+                        'status': "online"
+                    }
+                    data = JSON.stringify(data)
+                    socket.send(data)
+                    // console.log("inputValue", inputValue)
+                } else {
+                    let data = {
+                        'type': 'typing',
+                        'sent_by': USER_ID,
+                        'send_to': send_to,
+                        'thread_id': thread_id,
+                        'ketish': "on",
+                        'status': "online"
+                    }
+                    data = JSON.stringify(data)
+                    socket.send(data)
+                    // $(this)[0].reset()
+                }
+            }
+            )
+        }
+        socket.onmessage = async function (e) {
+            let data = JSON.parse(e.data)
+            let type = data['type']
+            let sent_by_id = data['sent_by']
+            let sent_to_id = data['sent_to']
+            let thread_id = data['thread_id']
+            console.log(data);
+            if (type == "notyping") {
+                if (tyuser != sent_to_id) {
+                    // no_user_typing(tyuser)
+                    document.getElementById(tyuser).innerHTML = "Online";
+                    // console.log("notyping", tyuser)
+                }
+            }
+            else if (type == "typing") {
+                if (tyuser != sent_to_id) {
+                    // get_user_typing(tyuser)
+                    document.getElementById(tyuser).innerHTML = "Yozmoqda...";
+                    console.log("sent_to_id")
+                }
+                setTimeout(() => {
+                        console.log("ok")
+                        socket.send(JSON.stringify({ ketish: "online" }));
+                    }, 5000)
+
+            } else {
+                let message = data['message']
+                document.getElementById(tyuser).innerHTML = "Online";
+                newMessage(message, sent_by_id, thread_id)
+
+            }
+        }
+
+        socket.onerror = async function (e) {
+            // console.log('eror', e)
+        }
+
+        socket.onclose = async function (e) {
+            // console.log('closed', e)
+        }
+
+        window.addEventListener("unload", () => {
+            let data = {
+                'type': "off",
+                'message': message,
+                'sent_by': USER_ID,
+                'send_to': send_to,
+                'thread_id': thread_id,
+                'ketish': "off",
+                'status': "yaqinda online edii"
+            }
+            socket.send(JSON.stringify(data));
+        });
+
+        window.addEventListener("load", () => {
+            socket.send(JSON.stringify({ ketish: "online" }));
+        });
+
+
+        function newMessage(message, sent_by_id, thread_id) {
+            setTimeout(() => {
+                let scrollDiv = document.getElementById("scrollDiv");
+                scrollDiv.scrollTop = scrollDiv.scrollHeight;
+                // console.log("Working");
+            }, 150);
+            if ($.trim(message) === '') {
+                return false;
+            }
+
+            // console.log(USER_ID)
+            // console.log(sent_by_id)
+            // console.log(thread_id)
+            let chat_id = 'chat_' + thread_id
+            let message_element;
+            if (sent_by_id == USER_ID) {
+                message_element = `
+			<div class="d-flex mb-4 replied">
+				<div class="msg_cotainer_send">
+					${message}
+					
+				</div>
+                <span class="msg_time_send">8:55 AM, Today</span>
+			</div>
+	    `
+            } else {
+                message_element = `
+           <div class="d-flex mb-4 received">
+              <div class="msg_cotainer">
+                 ${message}
+              </div>
+              <span class="msg_time">8:40 AM, Today</span>
+           </div>
+        `
+
+            }
+
+
+            // let message_body = $('.messages-wrapper[chat-id="' + chat_id + '"] .msg_card_body')
+
+            message_body.append($(message_element))
+            // message_body.animate({
+            //     scrollTop: $(document).height()
+            // }, 100);
+            // document.getElementById("3_typing").innerHTML = "Typing...";
+            input_message.val(null);
+
+        }
+        // function Typing(sent_by_id, thread_id) {
+
+        // let chat_id = 'chat_' + thread_id
+        // let message_element;
+        // if( sent_by_id == USER_ID){
+        //     message_element = `
+        // 		<div class="d-flex mb-4 replied">
+        // 			<div class="msg_cotainer_send">
+        // 				${message}
+        // 			</div>
+        //             <span class="msg_time_send">8:55 AM, Today</span>
+        // 		</div>
+        //     `
+        // }else{
+        //  message_element = `
+        //        <div class="d-flex mb-4 received">
+        //           <div class="msg_cotainer">
+        //              ${message}
+        //           </div>
+        //           <span class="msg_time">8:40 AM, Today</span>
+        //        </div>
+        //     `
+
+        // }
+
+
+        // let message_body = $('.messages-wrapper[chat-id="' + chat_id + '"] .msg_card_body')
+
+        // message_body.append($(message_element))
+
+        // }
+
+        $('.contact-li').on('click', function () {
+            $('.contacts .active').removeClass('active')
+            $(this).addClass('active')
+            console.log("okey")
+
+            // message wrappers
+            let chat_id = $(this).attr('chat-id')
+            $('.messages-wrapper.is_active').removeClass('is_active')
+            $('.messages-wrapper[chat-id="' + chat_id + '"]').addClass('is_active')
+
+        })
+
+
+
+        function get_active_other_user_id() {
+            let other_user_id = $('.messages-wrapper.is_active').attr('other-user-id')
+            other_user_id = $.trim(other_user_id)
+            return other_user_id
+        }
+
+        function get_active_thread_id() {
+            let chat_id = $('.messages-wrapper.is_active').attr('chat-id')
+            let thread_id = chat_id.replace('chat_', '')
+            return thread_id
+        }
+
+        function get_user_typing(userid) {
+            // let other_user_id = $('.messages-wrapper.is_active').attr('other-user-id')
+            // other_user_id = $.trim(other_user_id)
+            document.getElementById(userid).innerHTML = "Typing...";
+            return "true"
+        }
+        function no_user_typing(userid) {
+            // let other_user_id = $('.messages-wrapper.is_active').attr('other-user-id')
+            // other_user_id = $.trim(other_user_id)
+            document.getElementById(userid).innerHTML = "Online";
+            return "true"
+        }
+    </script>
+</body>
+
+</html>
